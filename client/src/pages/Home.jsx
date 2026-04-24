@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ShieldCheck, Vote, Lock } from "lucide-react";
+import { ShieldCheck, Vote, Lock, X, CheckCircle2 } from "lucide-react";
 
 function Home() {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900">
@@ -35,7 +37,9 @@ function Home() {
 
           <h2 className="mb-6 text-5xl font-bold leading-tight text-slate-900">
             Cast Your Vote
-            <span className="block text-blue-700">Safely and Transparently</span>
+            <span className="block text-blue-700">
+              Safely and Transparently
+            </span>
           </h2>
 
           <p className="mb-8 max-w-xl text-lg leading-8 text-slate-600">
@@ -45,13 +49,16 @@ function Home() {
 
           <div className="flex flex-wrap gap-4">
             <button
-              onClick={() => navigate("/vote")}
+              onClick={() => navigate("/verify")}
               className="rounded-xl bg-blue-700 px-8 py-3 font-semibold text-white shadow-md transition hover:bg-blue-800"
             >
               Start Voting
             </button>
 
-            <button className="rounded-xl border border-slate-300 bg-white px-8 py-3 font-semibold text-slate-700 transition hover:bg-slate-50">
+            <button
+              onClick={() => setShowModal(true)}
+              className="rounded-xl border border-slate-300 bg-white px-8 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
               Learn More
             </button>
           </div>
@@ -97,6 +104,65 @@ function Home() {
           </div>
         </motion.div>
       </main>
+
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-lg rounded-3xl bg-white p-8 shadow-2xl"
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900">
+                  How SecureVote Works
+                </h2>
+                <p className="mt-2 text-slate-600">
+                  SecureVote combines Zero-Knowledge Proofs with blockchain-based
+                  storage for private and transparent voting.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setShowModal(false)}
+                className="rounded-full bg-slate-100 p-2 hover:bg-slate-200"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              <div className="flex gap-3">
+                <CheckCircle2 className="mt-1 text-green-600" size={22} />
+                <p className="text-slate-700">
+                  Voters prove eligibility without revealing their identity.
+                </p>
+              </div>
+
+              <div className="flex gap-3">
+                <CheckCircle2 className="mt-1 text-green-600" size={22} />
+                <p className="text-slate-700">
+                  A nullifier prevents the same voter from voting twice.
+                </p>
+              </div>
+
+              <div className="flex gap-3">
+                <CheckCircle2 className="mt-1 text-green-600" size={22} />
+                <p className="text-slate-700">
+                  Verified votes are stored on blockchain for transparency.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowModal(false)}
+              className="mt-8 w-full rounded-xl bg-blue-700 py-3 font-semibold text-white hover:bg-blue-800"
+            >
+              Got it
+            </button>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }

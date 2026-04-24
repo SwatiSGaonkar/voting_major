@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LoaderCircle, CheckCircle2 } from "lucide-react";
 
@@ -15,8 +15,12 @@ function Processing() {
   const candidate = location.state?.candidate;
 
   const [currentStep, setCurrentStep] = useState(0);
+  const hasProcessed = useRef(false);
 
   useEffect(() => {
+    if (hasProcessed.current) return;
+    hasProcessed.current = true;
+
     if (!candidate) {
       navigate("/vote");
       return;
@@ -30,6 +34,10 @@ function Processing() {
         setCurrentStep(1);
         const proofRes = await fetch("/demo/proof.json");
         const publicRes = await fetch("/demo/public.json");
+
+        if (!proofRes.ok || !publicRes.ok) {
+          throw new Error("Proof files not found");
+        }
 
         const proof = await proofRes.json();
         const publicSignals = await publicRes.json();
@@ -56,18 +64,33 @@ function Processing() {
         setCurrentStep(3);
         await new Promise((res) => setTimeout(res, 800));
 
-        if (data.success) {
+        if (data.success === true) {
           navigate("/success", {
-            state: { candidate, votes: data.votes },
+            state: {
+              candidate,
+              votes: data.votes,
+              message: data.message,
+              transactionHash: data.transactionHash,
+              blockNumber: data.blockNumber,
+            },
           });
         } else {
-          alert(data.message || "Vote failed");
-          navigate("/vote");
+          navigate("/error", {
+            state: {
+              candidate,
+              message: data.message || "Vote failed",
+            },
+          });
         }
       } catch (error) {
         console.error("Vote processing error:", error);
-        alert("Something went wrong while processing the vote");
-        navigate("/vote");
+
+        navigate("/error", {
+          state: {
+            candidate,
+            message: "Something went wrong while processing the vote",
+          },
+        });
       }
     };
 
