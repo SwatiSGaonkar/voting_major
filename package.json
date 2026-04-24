@@ -1,6 +1,20 @@
 {
+  "name": "zkp-voting-system",
+  "version": "1.0.0",
+  "description": "Zero-Knowledge Proof based anonymous voting system with blockchain integration",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "node": "hardhat node",
+    "deploy": "hardhat run scripts/deploy.js --network localhost",
+    "compile": "hardhat compile"
+  },
   "dependencies": {
     "circomlib": "^2.0.5",
     "circomlibjs": "^0.1.7"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.22.5"
   }
 }

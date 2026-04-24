@@ -1,14 +1,16 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "description": "ZKP Voting Backend - Blockchain Integration",
   "main": "server.js",
+  "type": "commonjs",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.6",
+    "ethers": "^6.0.0",
     "express": "^5.2.1",
     "snarkjs": "^0.7.6"
-  },
-  "type": "commonjs"
+  }
 }
