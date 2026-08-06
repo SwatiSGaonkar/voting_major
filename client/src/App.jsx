@@ -6,6 +6,7 @@ import Processing from "./pages/Processing";
 import Success from "./pages/Success";
 import Error from "./pages/Error";
 import Results from "./pages/Results";
+import InvalidCredentials from "./pages/InvalidCredentials";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/success" element={<Success />} />
       <Route path="/error" element={<Error />} />
       <Route path="/results" element={<Results />} />
+      <Route path="/invalid" element={<InvalidCredentials />} />
     </Routes>
   );
 }

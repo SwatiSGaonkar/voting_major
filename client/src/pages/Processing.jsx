@@ -64,33 +64,48 @@ function Processing() {
         setCurrentStep(3);
         await new Promise((res) => setTimeout(res, 800));
 
-        if (data.success === true) {
-          navigate("/success", {
-            state: {
-              candidate,
-              votes: data.votes,
-              message: data.message,
-              transactionHash: data.transactionHash,
-              blockNumber: data.blockNumber,
-            },
-          });
-        } else {
-          navigate("/error", {
-            state: {
-              candidate,
-              message: data.message || "Vote failed",
-            },
-          });
-        }
+       if (data.success) {
+  navigate("/success", {
+    state: {
+      candidate,
+      votes: data.votes,
+      message: data.message,
+      transactionHash: data.transactionHash,
+      blockNumber: data.blockNumber,
+    },
+  });
+}
+else if (data.message === "Duplicate vote") {
+  navigate("/duplicate-vote", {
+    state: { candidate },
+  });
+}
+else if (
+  data.message === "Invalid proof" ||
+  data.message === "Invalid credentials" ||
+  data.message === "Proof verification failed"
+) {
+  navigate("/invalid-vote", {
+    state: { candidate },
+  });
+}
+else {
+  navigate("/error", {
+    state: {
+      candidate,
+      message: data.message || "Vote failed",
+    },
+  });
+}
       } catch (error) {
         console.error("Vote processing error:", error);
 
         navigate("/error", {
-          state: {
-            candidate,
-            message: "Something went wrong while processing the vote",
-          },
-        });
+  state: {
+    candidate,
+    message: error.message || "Something went wrong while processing the vote",
+  },
+});
       }
     };
 

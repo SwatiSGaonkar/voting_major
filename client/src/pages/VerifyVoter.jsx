@@ -10,22 +10,32 @@ function VerifyVoter() {
   const [loading, setLoading] = useState(false);
 
   const handleVerify = async () => {
-    if (!secret || !electionId) {
-      alert("Please enter all fields");
-      return;
-    }
+  if (!secret || !electionId) {
+    alert("Please enter all fields");
+    return;
+  }
 
-    setLoading(true);
+  setLoading(true);
 
-    await new Promise((res) => setTimeout(res, 2000));
+  // Simulate ZKP proof generation
+  await new Promise((res) => setTimeout(res, 2000));
 
+  // Demo credential validation
+  if (secret === "123" && electionId === "1") {
     navigate("/vote", {
       state: {
         secret,
         electionId,
       },
     });
-  };
+  } else {
+    navigate("/invalid", {
+      state: {
+        message: "Invalid Secret Key or Election ID",
+      },
+    });
+  }
+};
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-100 px-6">
