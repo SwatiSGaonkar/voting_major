@@ -49,7 +49,7 @@ function Home() {
 
           <div className="flex flex-wrap gap-4">
             <button
-              onClick={() => navigate("/verify")}
+              onClick={() => navigate("/verify-voter")}
               className="rounded-xl bg-blue-700 px-8 py-3 font-semibold text-white shadow-md transition hover:bg-blue-800"
             >
               Start Voting

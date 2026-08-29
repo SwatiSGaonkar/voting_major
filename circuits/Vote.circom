@@ -87,4 +87,4 @@ template Vote(levels) {
     vote === isVote1 * 1 + isVote2 * 2 + isVote3 * 3;
 }
 
-component main {public [root, nullifierHash, electionId]} = Vote(3);
+component main {public [root, nullifierHash, electionId]} = Vote(4);

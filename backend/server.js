@@ -46,11 +46,12 @@ function loadDemoProof() {
 }
 
 function publicSignalToNullifier(publicSignals) {
-  if (!Array.isArray(publicSignals) || publicSignals.length < 2) {
+  if (!Array.isArray(publicSignals) || publicSignals.length < 4) {
     throw new Error("Missing nullifier in public signals");
   }
 
-  const nullifierBigInt = BigInt(publicSignals[1]);
+  const nullifierBigInt = BigInt(publicSignals[3]);
+
   return "0x" + nullifierBigInt.toString(16).padStart(64, "0");
 }
 
