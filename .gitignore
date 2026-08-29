@@ -11,3 +11,21 @@ build/public.json
 circuits/input.json
 
 .env
+
+# Hardhat generated files
+artifacts/
+cache/
+
+# Circuit generated files
+*.sym
+build/proof.json
+build/public.json
+build/Vote_js/generate_witness.js
+build/Vote_js/witness_calculator.js
+
+# Backups
+*.backup.json
+demo-backup/
+
+# Generated ABI
+contracts/*.abi.json
